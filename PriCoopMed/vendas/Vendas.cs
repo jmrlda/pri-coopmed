@@ -556,37 +556,35 @@ namespace PriCoopMed.vendas
         }
 
 
-        public string insertComissao()
+        public void insertComissao()
         {
 
-            string classe_descricao = null;
-            string sql = null;
-            SqlDataReader obj;
-                sql = "SELECT * FROM TDU_classes where CDU_Codigo ";
-            obj = con.consulta(sql);
+            //string classe_descricao = null;
+            //string sql_delete = null;
+            //string sql_insert = null;
+            //SqlDataReader obj;
+            //sql_delete = "delete from comissaoInterveniente";
+            //sql_insert = "insert into ComissaoInterveniente(id, vendedor, nome,  classe, especialidade, posto, comissao, data, filial, tipoDoc, serie, numDoc, entidade, nomeEntidade, total, comVenda  )  select distinct cd.id, ld.Vendedor, v.Nome, v.CDU_classe, v.CDU_Especialidade, cd.Posto, c.Comissao, ld.Data, cd.Filial, cd.TipoDoc, cd.Serie, cd.NumDoc, cd.Entidade, cli.Nome, case  when ld.precUnit = 0 then ld.CDU_pliquido else cast(ld.precUnit  as float) end as total, case  when ld.precUnit <= 0 then ld.CDU_pliquido * (c.Comissao/100) else ld.precUnit * (c.Comissao/100) end  as comVenda from CabecDoc cd, LinhasDoc ld, Vendedores v, Comissoes c, Artigo a, ArtigoMoeda am, Clientes cli where cd.id = ld.IdCabecDoc and v.Vendedor = ld.Vendedor and c.Campo1 = ld.Vendedor and c.Campo2 = a.Familia and cd.Entidade = cli.Cliente and a.Artigo = am.Artigo and am.Moeda = 'MT'   and ld.Vendedor is not NULL order by NumDoc asc";
 
+            Conexao con = new Conexao();
 
-                if (obj == null)
+            if (con.Insert("delete from comissaoInterveniente") == true)
+            {
+                if (con.Insert("insert into ComissaoInterveniente(id, vendedor, nome,  classe, especialidade, posto, comissao, data, filial, tipoDoc, serie, numDoc, entidade, nomeEntidade, total, comVenda  )  select distinct cd.id, ld.Vendedor, v.Nome, v.CDU_classe, v.CDU_Especialidade, cd.Posto, c.Comissao, ld.Data, cd.Filial, cd.TipoDoc, cd.Serie, cd.NumDoc, cd.Entidade, cli.Nome, case  when ld.precUnit = 0 then ld.CDU_pliquido else cast(ld.precUnit  as float) end as total, case  when ld.precUnit <= 0 then ld.CDU_pliquido * (c.Comissao/100) else ld.precUnit * (c.Comissao/100) end  as comVenda from CabecDoc cd, LinhasDoc ld, Vendedores v, Comissoes c, Artigo a, ArtigoMoeda am, Clientes cli where cd.id = ld.IdCabecDoc and v.Vendedor = ld.Vendedor and c.Campo1 = ld.Vendedor and c.Campo2 = a.Familia and cd.Entidade = cli.Cliente and a.Artigo = am.Artigo and am.Moeda = 'MT'   and ld.Vendedor is not NULL order by NumDoc asc") == false)
                 {
-                //Console.WriteLine("Ocorreu um erro", objLista);
-                MessageBox.Show("insertComissao: Object reader nulo");
-                return null;
+                    MessageBox.Show("Insert: Erro ao inserir dados da comissão");
+
                 }
 
-                if (obj.Read())
-                {
-                    classe_descricao = " - " + obj.GetValue(obj.GetOrdinal("CDU_descricao")).ToString();
-                }
+            }
+            else
+            {
+                MessageBox.Show("Insert: Erro ao remover dados da comissão");
 
-            //vendedor_descricao = nome + " " + getC
-                obj.Close();
-
-            con.fechar();
-
-            
+            }
 
 
-            return classe_descricao;
+
         }
 
 

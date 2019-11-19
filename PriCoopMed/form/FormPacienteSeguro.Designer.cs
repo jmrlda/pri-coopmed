@@ -166,6 +166,7 @@
             // 
             this.btnFechar.BackColor = System.Drawing.Color.Transparent;
             this.btnFechar.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnFechar.ForeColor = System.Drawing.SystemColors.Control;
             this.btnFechar.Location = new System.Drawing.Point(396, 3);
             this.btnFechar.Name = "btnFechar";
             this.btnFechar.Size = new System.Drawing.Size(29, 20);

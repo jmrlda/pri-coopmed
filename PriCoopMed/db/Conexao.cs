@@ -81,6 +81,27 @@ namespace PriCoopMed.db
             return dataReader;
         }
 
+
+        public bool Insert(string sql)
+        {
+            SqlConnection con = new SqlConnection(this.connetionString);
+            bool pass = false;
+            try
+            {
+
+                con.Open();
+                SqlCommand comand = new SqlCommand(sql, con);
+                comand.ExecuteNonQuery();
+                pass = true;
+            } catch ( Exception err )
+            {
+                MessageBox.Show("Insert: " + err.Message);
+                pass = false;
+
+            }
+
+            return pass;
+        }
         //public SqlDataReader consultaAvancada(string sql)
         //{
         //    this.comando = new SqlCommand(sql, this.conexao);
